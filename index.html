@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인체 주요 생체 시스템 심층 탐구</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Final application structure: This version is a comprehensive update based on all user feedback. It maintains the student-friendly design while significantly expanding the content to be more detailed and accurate. Key changes include adding detailed explanations for all systems, clarifying complex processes like respiration and excretion with a clear step-by-step approach, and providing a better overview of concepts like digestion. The UI is kept consistent but the content within each tab is enriched to provide a richer learning experience. New visualizations in the form of charts have been added to help explain complex data more easily. The 'Questions' tab has been renamed to 'Daily Questions' and now to 'Curiosity' for better clarity. The main title has been changed to '인체 주요 생체 시스템 심층 탐구'. The brain emoji has also been removed. -->
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #e0f2fe; }
+        .content-section { display: none; }
+        .content-section.active { display: block; animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .nav-button.active { background-color: #3b82f6; color: white; font-weight: 700; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+        .keyword {
+            color: #000000;
+            font-weight: 700;
+            padding: 2px 0px;
+            border-radius: 4px;
+        }
+        .chart-container { position: relative; margin: auto; height: 300px; width: 100%; max-width: 600px; max-height: 400px; }
+        @media (min-width: 768px) { .chart-container { height: 350px; } }
+        .qa-list li { padding: 0.75rem; background-color: #f0f9ff; border: 1px solid #bae6fd; border-radius: 0.5rem; margin-bottom: 0.5rem; }
+        .flow-line { display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #3b82f6; }
+        .flow-box { background-color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); text-align: center; font-weight: 500; }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8 max-w-7xl">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-5xl font-bold text-blue-700 mb-3">인체 주요 생체 시스템 심층 탐구</h1>
+            <p class="text-base md:text-lg text-gray-600">소화, 순환, 호흡, 배설계의 놀라운 상호작용을 재미있게 배워봐요!</p>
+        </header>
+
+        <nav class="flex flex-wrap justify-center gap-2 md:gap-3 mb-8">
+            <button data-target="intro" class="nav-button active px-3 py-2 md:px-5 md:py-2.5 bg-white border border-gray-300 rounded-full shadow-sm hover:bg-gray-100 transition-all text-sm md:text-base">소개</button>
+            <button data-target="nutrition" class="nav-button px-3 py-2 md:px-5 md:py-2.5 bg-white border border-gray-300 rounded-full shadow-sm hover:bg-gray-100 transition-all text-sm md:text-base">영양</button>
+            <button data-target="digestion" class="nav-button px-3 py-2 md:px-5 md:py-2.5 bg-white border border-gray-300 rounded-full shadow-sm hover:bg-gray-100 transition-all text-sm md:text-base">소화계</button>
+            <button data-target="circulation" class="nav-button px-3 py-2 md:px-5 md:py-2.5 bg-white border border-gray-300 rounded-full shadow-sm hover:bg-gray-100 transition-all text-sm md:text-base">순환계</button>
+            <button data-target="respiration" class="nav-button px-3 py-2 md:px-5 md:py-2.5 bg-white border border-gray-300 rounded-full shadow-sm hover:bg-gray-100 transition-all text-sm md:text-base">호흡계</button>
+            <button data-target="excretion" class="nav-button px-3 py-2 md:px-5 md:py-2.5 bg-white border border-gray-300 rounded-full shadow-sm hover:bg-gray-100 transition-all text-sm md:text-base">배설계</button>
+            <button data-target="cooperation" class="nav-button px-3 py-2 md:px-5 md:py-2.5 bg-white border border-gray-300 rounded-full shadow-sm hover:bg-gray-100 transition-all text-sm md:text-base">시스템간 협력</button>
+            <button data-target="questions" class="nav-button px-3 py-2 md:px-5 md:py-2.5 bg-white border border-gray-300 rounded-full shadow-sm hover:bg-gray-100 transition-all text-sm md:text-base">호기심</button>
+        </nav>
+
+        <main id="main-content" class="bg-white p-6 md:p-8 rounded-2xl shadow-lg min-h-[500px]">
+            
+            <section id="intro" class="content-section active">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">생명 유지의 톱니바퀴 ⚙️</h2>
+                <p class="mb-4 text-gray-600 leading-relaxed">우리 몸은 생명을 유지하기 위해 다양한 기관계가 마치 정교한 시계의 톱니바퀴처럼 맞물려 돌아갑니다. <span class="keyword">소화계, 순환계, 호흡계, 배설계</span>는 각자 고유한 역할을 수행하면서도, 긴밀하게 연결되어 우리 몸의 균형, 즉 <span class="keyword">항상성</span>을 유지합니다.</p>
+                <p class="mb-4 text-gray-600 leading-relaxed">이 탐험은 각 시스템의 구조와 기능을 개별적으로 살펴보고, 이들이 어떻게 상호작용하여 영양소를 얻고, 산소를 공급하며, 노폐물을 제거하는지 통합적인 관점에서 이해할 수 있도록 설계되었습니다. 이 여정을 통해 우리 몸의 경이로움을 느껴보세요.</p>
+                <div class="mt-8 p-6 bg-blue-50 border border-blue-200 rounded-lg text-center">
+                    <p class="text-blue-800 font-semibold">🚀 상단의 버튼을 눌러 인체 탐험을 시작해보세요!</p>
+                </div>
+            </section>
+
+            <section id="nutrition" class="content-section">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">영양: 생명의 연료와 조절자</h2>
+                <p class="mb-6 text-gray-600">영양소는 우리 몸을 구성하고 에너지를 제공하며 생체 기능을 조절하는 필수적인 물질입니다. 영양소는 크게 에너지를 내는 <span class="keyword">주영양소</span>와 몸의 기능을 조절하는 <span class="keyword">부영양소</span>로 나뉩니다.</p>
+                
+                <h3 class="text-xl font-bold text-gray-800 mb-4">주영양소의 에너지 비교</h3>
+                <p class="text-gray-600 text-sm mb-4">주요 영양소 1g이 내는 에너지(칼로리)를 비교해봅시다.</p>
+                <div class="chart-container mb-8">
+                    <canvas id="nutrientChart"></canvas>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <div class="p-4 border border-gray-200 rounded-lg bg-gray-50">
+                        <h3 class="text-xl font-bold text-blue-600">주영양소</h3>
+                        <p class="text-gray-500 text-sm">에너지를 내는 연료 역할을 합니다.</p>
+                        <ul class="list-disc list-inside mt-4 space-y-2 text-gray-600">
+                            <li><span class="keyword">탄수화물</span>: 주 에너지원, 1g당 약 4kcal의 열량. (쌀, 빵)</li>
+                            <li><span class="keyword">단백질</span>: 몸의 구성 성분, 효소/호르몬 생성. 1g당 약 4kcal의 열량. (고기, 생선)</li>
+                            <li><span class="keyword">지방</span>: 가장 효율적인 에너지원, 1g당 약 9kcal의 열량. (기름, 버터)</li>
+                        </ul>
+                    </div>
+                    <div class="p-4 border border-gray-200 rounded-lg bg-gray-50">
+                        <h3 class="text-xl font-bold text-blue-600">부영양소</h3>
+                        <p class="text-gray-500 text-sm">몸의 기능을 조절하는 필수 물질입니다.</p>
+                        <ul class="list-disc list-inside mt-4 space-y-2 text-gray-600">
+                            <li><span class="keyword">바이타민</span>: 소량으로 생체 기능을 원활하게 조절합니다. (채소, 과일)</li>
+                            <li><span class="keyword">무기염류</span>: 뼈와 이의 구성 성분, 생체 기능 조절. (칼슘, 철)</li>
+                            <li><span class="keyword">물</span>: 몸의 2/3 차지, 물질 운반 및 체온 조절.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-bold text-gray-800 mb-4">소화된 영양소의 흡수와 이동</h3>
+                <p class="mb-4 text-gray-600">소장에서 완전히 소화된 최종 산물들은 <span class="keyword">소장 융털</span>을 통해 흡수됩니다. 융털은 표면적을 넓혀 영양소 흡수를 효율적으로 만듭니다. 흡수된 영양소는 종류에 따라 다른 경로로 이동합니다.</p>
+                <div class="p-4 border border-blue-200 rounded-lg bg-blue-50">
+                    <ul class="list-disc list-inside space-y-2 text-gray-700">
+                        <li><span class="keyword">수용성 영양소</span>: <span class="keyword">포도당, 아미노산, 무기염류, 바이타민 B/C</span>는 융털 속 <span class="keyword">모세혈관</span>으로 흡수됩니다. → 모세혈관 → 간문맥 → 간 → 심장 → 온몸의 세포로 운반됩니다.</li>
+                        <li><span class="keyword">지용성 영양소</span>: <span class="keyword">지방산, 모노글리세리드, 바이타민 A/D/E/K</span>는 융털 속 <span class="keyword">암죽관</span>으로 흡수됩니다. → 암죽관 → <span class="keyword">림프관</span> → 가슴 림프관 → 심장 → 온몸의 세포로 운반됩니다.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="digestion" class="content-section">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">소화계: 음식물의 여정</h2>
+                <p class="mb-4 text-gray-600"><span class="keyword">소화(Digestion)</span>란 음식물 속의 영양소를 우리 몸이 흡수할 수 있도록 잘게 분해하는 과정입니다. 소화는 크게 두 가지 방법으로 이루어집니다.</p>
+                <ul class="list-disc list-inside mb-4 space-y-2 text-gray-600">
+                    <li><span class="keyword">기계적 소화</span>: 이, 위, 장의 운동으로 음식물을 잘게 부수고 섞어 소화 효소가 잘 작용하도록 돕습니다.</li>
+                    <li><span class="keyword">화학적 소화</span>: 침, 위액, 이자액, 쓸개즙 등 <span class="keyword">소화액</span> 속의 <span class="keyword">소화 효소</span>가 음식물 속 영양소를 분해합니다.</li>
+                </ul>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">소화 기관의 분류</h3>
+                <p class="mb-4 text-gray-600">소화계는 음식물이 직접 지나가는 <span class="keyword">소화관</span>과 소화에 필요한 물질을 분비하는 <span class="keyword">소화샘</span>으로 나눌 수 있습니다.</p>
+                <div class="p-4 border border-blue-200 rounded-lg bg-blue-50 mb-4">
+                    <ul class="list-disc list-inside space-y-1 text-gray-700">
+                        <li><span class="keyword">소화관</span>: <span class="keyword">입, 식도, 위, 소장, 대장, 항문</span> 등 음식물이 이동하는 통로입니다.</li>
+                        <li><span class="keyword">소화샘</span>: <span class="keyword">침샘, 간, 쓸개, 이자</span> 등 소화액을 분비하여 소화를 돕는 기관입니다.</li>
+                    </ul>
+                </div>
+                
+                <h3 class="text-xl font-bold text-gray-800 mb-2">소화 기관의 종류와 기능</h3>
+                <div class="overflow-x-auto border rounded-lg">
+                    <table class="min-w-full divide-y divide-gray-200 text-sm">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">기관</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">기능 및 역할</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr><td class="px-6 py-4 font-medium">입</td><td class="px-6 py-4">이로 음식물을 잘게 부수는 <span class="keyword">기계적 소화</span>와 침의 아밀레이스로 탄수화물을 소화시키는 <span class="keyword">화학적 소화</span>가 시작됩니다.</td></tr>
+                            <tr><td class="px-6 py-4 font-medium">식도</td><td class="px-6 py-4">음식물을 위로 운반하는 통로입니다. <span class="keyword">연동 운동</span>을 통해 음식물을 이동시킵니다.</td></tr>
+                            <tr><td class="px-6 py-4 font-medium">위</td><td class="px-6 py-4">근육 운동으로 음식물을 섞고, 위액의 염산과 펩신으로 단백질 소화를 시작합니다.</td></tr>
+                            <tr><td class="px-6 py-4 font-medium">소장</td><td class="px-6 py-4">이자액과 쓸개즙으로 3대 영양소의 소화가 모두 이루어지는 주된 장소이며, 융털에서 소화된 영양소를 흡수합니다.</td></tr>
+                            <tr><td class="px-6 py-4 font-medium">대장</td><td class="px-6 py-4">소화되지 않은 음식물 찌꺼기에서 남은 물을 흡수하고, 남은 물질을 항문을 통해 배출합니다.</td></tr>
+                            <tr><td class="px-6 py-4 font-medium">항문</td><td class="px-6 py-4">소화되지 않은 찌꺼기를 몸 밖으로 배출하는 출구입니다.</td></tr>
+                            <tr><td class="px-6 py-4 font-medium">간</td><td class="px-6 py-4">음식물이 직접 지나가지는 않지만, 지방의 소화를 돕는 <span class="keyword">쓸개즙</span>을 생성합니다. 또한 영양소 저장 및 해독 작용을 합니다.</td></tr>
+                            <tr><td class="px-6 py-4 font-medium">쓸개</td><td class="px-6 py-4">간에서 만든 쓸개즙을 농축해 저장했다가 소장으로 분비합니다.</td></tr>
+                            <tr><td class="px-6 py-4 font-medium">이자</td><td class="px-6 py-4">3대 영양소(탄수화물, 단백질, 지방)를 모두 소화시키는 효소가 담긴 <span class="keyword">이자액</span>을 분비합니다.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg border border-green-200 mt-4 text-center">
+                    <h4 class="font-bold text-green-800">음식물의 이동 경로</h4>
+                    <p class="mt-2 text-sm font-mono tracking-wider"><span class="keyword">입 → 식도 → 위 → 소장 → 대장 → 항문</span></p>
+                </div>
+            </section>
+
+            <section id="circulation" class="content-section">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">순환계: 생명의 고속도로 🩸</h2>
+                <p class="mb-4 text-gray-600"><span class="keyword">순환계</span>는 <span class="keyword">심장, 혈관, 혈액</span>으로 구성되어 영양소, 산소, 노폐물, 호르몬 등을 온몸으로 운반하며 <span class="keyword">항상성</span>을 유지하는 기관계입니다.</p>
+                
+                <h3 class="text-xl font-bold text-gray-800 mb-2">순환 기관의 기능</h3>
+                <ul class="list-disc list-inside mb-4 space-y-2 text-gray-600">
+                    <li><span class="keyword">심장</span>: 온몸으로 혈액을 펌프질하는 강력한 근육 기관.</li>
+                    <li><span class="keyword">혈관</span>: 심장에서 나온 혈액이 이동하는 통로 (동맥, 정맥, 모세혈관).</li>
+                    <li><span class="keyword">혈액</span>: 혈관 속을 흐르며 물질을 운반하는 액체.</li>
+                </ul>
+
+                <div class="grid md:grid-cols-2 gap-8 items-start mb-8">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2 text-center">심장의 구조와 기능</h3>
+                        <p class="mb-4 text-gray-600">심장은 <span class="keyword">좌심방, 우심방, 좌심실, 우심실</span>의 네 개의 방으로 나뉘어져 있으며, <span class="keyword">판막</span>이 있어 혈액이 역류하는 것을 막아줍니다. 좌우가 구분되어 있어 산소가 풍부한 <span class="keyword">동맥혈</span>과 산소가 적은 <span class="keyword">정맥혈</span>이 섞이지 않게 합니다.</p>
+                        <div class="p-4 border rounded-lg bg-red-50">
+                            <ul class="list-disc list-inside space-y-1 text-sm text-gray-700">
+                                <li><span class="keyword">우심방</span>: 온몸을 돌고 온 <span class="keyword">정맥혈</span>을 받아들임.</li>
+                                <li><span class="keyword">우심실</span>: 우심방의 정맥혈을 <span class="keyword">폐</span>로 보냄.</li>
+                                <li><span class="keyword">좌심방</span>: 폐에서 산소를 얻고 온 <span class="keyword">동맥혈</span>을 받아들임.</li>
+                                <li><span class="keyword">좌심실</span>: 좌심방의 동맥혈을 <span class="keyword">온몸</span>으로 보냄.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2 text-center">혈관의 종류별 특징</h3>
+                        <div class="chart-container">
+                            <canvas id="vesselChart"></canvas>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2 text-center">동맥은 혈압이 가장 높고 벽이 두꺼우며, 모세혈관은 혈액의 흐름이 가장 느리고 벽이 얇아 물질 교환이 일어납니다.</p>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-bold text-gray-800 mb-2">혈액의 구성 성분</h3>
+                <p class="mb-4 text-gray-600">혈액은 약 55%의 <span class="keyword">혈장</span>과 약 45%의 <span class="keyword">혈구</span>로 이루어져 있습니다. 혈액의 구성 비율을 그래프로 확인해 보세요.</p>
+                <div class="chart-container mb-8">
+                    <canvas id="bloodCompositionChart"></canvas>
+                </div>
+
+                <ul class="list-disc list-inside mb-4 space-y-2 text-gray-600">
+                    <li><span class="keyword">혈장</span>: 물이 주성분이며, 영양소, 호르몬, 노폐물 등을 녹여 운반합니다.</li>
+                    <li><span class="keyword">적혈구</span>: <span class="keyword">헤모글로빈</span>이 들어있어 산소를 운반하며, 붉은색을 띱니다.</li>
+                    <li><span class="keyword">백혈구</span>: 모양이 일정하지 않고 핵이 있으며, 몸속으로 들어온 세균을 잡아먹는 면역 작용을 합니다.</li>
+                    <li><span class="keyword">혈소판</span>: 크기가 가장 작고 핵이 없으며, 혈액을 응고시켜 출혈을 멈추게 합니다.</li>
+                </ul>
+
+                <h3 class="text-xl font-bold text-gray-800 mb-2">혈액 순환 경로</h3>
+                <div class="grid md:grid-cols-2 gap-4 mb-4">
+                    <div class="p-4 border rounded-lg bg-blue-50">
+                        <h4 class="font-bold text-center text-blue-800">폐순환 (우심실 → 폐 → 좌심방)</h4>
+                        <p class="mt-2 text-sm text-gray-700">온몸을 돌고 온 <span class="keyword">정맥혈</span>이 <span class="keyword">우심실</span>에서 <span class="keyword">폐동맥</span>을 통해 <span class="keyword">폐</span>로 이동합니다. 폐포에서 산소를 얻고 이산화탄소를 내보내 <span class="keyword">동맥혈</span>로 바뀐 후, <span class="keyword">폐정맥</span>을 통해 <span class="keyword">좌심방</span>으로 돌아옵니다.</p>
+                    </div>
+                    <div class="p-4 border rounded-lg bg-red-50">
+                        <h4 class="font-bold text-center text-red-800">체순환 (좌심실 → 온몸 → 우심방)</h4>
+                        <p class="mt-2 text-sm text-gray-700">폐에서 온 <span class="keyword">동맥혈</span>이 <span class="keyword">좌심실</span>에서 <span class="keyword">대동맥</span>을 통해 <span class="keyword">온몸</span>으로 나갑니다. 조직 세포에 산소와 영양소를 공급하고 노폐물을 받아 <span class="keyword">정맥혈</span>로 바뀐 후, <span class="keyword">대정맥</span>을 통해 <span class="keyword">우심방</span>으로 돌아옵니다.</p>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-bold text-gray-800 mb-2">순환계와 관련된 질병들</h3>
+                <p class="mb-4 text-gray-600">순환계에 문제가 생기면 심각한 건강 이상을 초래할 수 있습니다.</p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm text-gray-700">
+                    <div class="p-3 border rounded-lg bg-gray-50"><span class="keyword">고혈압</span>: 혈압이 정상 범위보다 높아 혈관에 지속적으로 부담을 주는 상태.</div>
+                    <div class="p-3 border rounded-lg bg-gray-50"><span class="keyword">동맥경화</span>: 동맥 벽이 딱딱해지고 좁아져 혈액 순환을 방해하는 질병.</div>
+                    <div class="p-3 border rounded-lg bg-gray-50"><span class="keyword">정맥류</span>: 정맥 속 판막 기능 이상으로 혈액이 역류해 혈관이 늘어나는 질병.</div>
+                    <div class="p-3 border rounded-lg bg-gray-50"><span class="keyword">심근경색</span>: 심장 근육에 혈액 공급이 끊어져 조직이 괴사하는 질환.</div>
+                    <div class="p-3 border rounded-lg bg-gray-50"><span class="keyword">뇌출혈</span>: 뇌혈관이 터져 뇌 속에 피가 고이는 질환.</div>
+                </div>
+            </section>
+
+            <section id="respiration" class="content-section">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">호흡계: 기체 교환의 중심 🌬️</h2>
+                <p class="mb-4 text-gray-600">우리 몸은 생명을 유지하기 위해 끊임없이 <span class="keyword">산소</span>를 흡수하고 <span class="keyword">이산화탄소</span>를 배출합니다. 이 중요한 역할을 담당하는 것이 바로 <span class="keyword">호흡계</span>입니다.</p>
+                <h3 class="text-xl font-bold text-gray-800 mb-4">호흡 기관의 종류와 기능</h3>
+                <div class="overflow-x-auto border rounded-lg">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">기관</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">기능</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200 text-sm">
+                            <tr><td class="px-6 py-4 font-medium">코</td><td class="px-6 py-4">공기를 흡입하여 여과하고, 온도와 습도를 조절합니다.</td></tr>
+                            <tr><td class="px-6 py-4 font-medium">기관</td><td class="px-6 py-4">공기가 폐로 이동하는 통로입니다. <span class="keyword">섬모</span>가 있어 먼지를 걸러냅니다.</td></tr>
+                            <tr><td class="px-6 py-4 font-medium">기관지</td><td class="px-6 py-4">기관에서 갈라져 폐로 연결되는 여러 통로입니다.</td></tr>
+                            <tr><td class="px-6 py-4 font-medium">폐</td><td class="px-6 py-4">수많은 <span class="keyword">폐포</span>로 구성되어 있으며, 기체 교환의 주 장소입니다.</td></tr>
+                            <tr><td class="px-6 py-4 font-medium">폐포</td><td class="px-6 py-4">모세혈관으로 둘러싸인 작은 공기 주머니로, 실제 기체 교환이 일어나는 곳입니다.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-lg border border-blue-200 mt-4 text-center">
+                    <h4 class="font-bold text-blue-800">공기의 이동 경로</h4>
+                    <p class="mt-2 text-sm font-mono tracking-wider"><span class="keyword">코 → 기관 → 기관지 → 폐 → 폐포</span></p>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-4 mt-6">호흡 운동의 원리</h3>
+                <p class="mb-4 text-gray-600">호흡 운동은 가슴 안의 공간인 <span class="keyword">흉강의 부피 변화</span>에 따라 폐 내부의 압력이 달라지면서 일어납니다. 외부와 폐 내부의 압력 차이가 공기를 이동시킵니다.</p>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="border p-4 rounded-lg bg-gray-50">
+                        <h4 class="font-bold text-center">들숨 (흡기)</h4>
+                        <p class="text-sm mt-2"><span class="keyword">횡격막</span>이 아래로 내려가고 <span class="keyword">갈비뼈</span>가 올라가면서 <span class="keyword">흉강의 부피가 커집니다.</span></p>
+                        <p class="text-sm mt-1">폐 내부의 압력이 외부보다 낮아져 공기가 폐 안으로 들어옵니다.</p>
+                    </div>
+                    <div class="border p-4 rounded-lg bg-gray-50">
+                        <h4 class="font-bold text-center">날숨 (호기)</h4>
+                        <p class="text-sm mt-2"><span class="keyword">횡격막</span>이 올라가고 <span class="keyword">갈비뼈</span>가 내려가면서 <span class="keyword">흉강의 부피가 작아집니다.</span></p>
+                        <p class="text-sm mt-1">폐 내부의 압력이 외부보다 높아져 공기가 폐 밖으로 나갑니다.</p>
+                    </div>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-4 mt-6">기체 교환의 원리</h3>
+                <p class="mb-4 text-gray-600">기체 교환은 기체가 농도가 높은 곳에서 낮은 곳으로 이동하는 <span class="keyword">확산</span> 원리에 의해 일어납니다.</p>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="border p-4 rounded-lg bg-gray-50">
+                        <h4 class="font-bold text-center">폐포에서의 기체 교환</h4>
+                        <p class="text-sm mt-2">폐포의 O₂ 농도 > 혈액의 O₂ 농도 ➡️ <span class="keyword">O₂가 폐포에서 혈액으로 이동.</span></p>
+                        <p class="text-sm mt-1">혈액의 CO₂ 농도 > 폐포의 CO₂ 농도 ➡️ <span class="keyword">CO₂가 혈액에서 폐포로 이동.</span></p>
+                    </div>
+                    <div class="border p-4 rounded-lg bg-gray-50">
+                        <h4 class="font-bold text-center">조직 세포에서의 기체 교환</h4>
+                        <p class="text-sm mt-2">혈액의 O₂ 농도 > 세포의 O₂ 농도 ➡️ <span class="keyword">O₂가 혈액에서 세포로 이동.</span></p>
+                        <p class="text-sm mt-1">세포의 CO₂ 농도 > 혈액의 CO₂ 농도 ➡️ <span class="keyword">CO₂가 세포에서 혈액으로 이동.</span></p>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="excretion" class="content-section">
+                 <h2 class="text-2xl font-bold text-gray-800 mb-4">배설계: 몸 속 환경 조절 💧</h2>
+                <p class="mb-4 text-gray-600"><span class="keyword">배설계</span>는 몸 속의 <span class="keyword">노폐물</span>을 걸러 오줌으로 만들어 내보내고, 체내 수분량을 조절하여 <span class="keyword">항상성</span>을 유지합니다.</p>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">노폐물의 종류와 생성 과정</h3>
+                <ul class="list-disc list-inside mb-4 space-y-2 text-gray-600">
+                    <li><span class="keyword">이산화탄소($CO_2$)</span>: 세포 호흡 결과 생성되며 주로 폐를 통해 배출됩니다.</li>
+                    <li><span class="keyword">물($H_2O$)</span>: 세포 호흡 결과 생성되며 콩팥, 폐, 피부(땀)를 통해 배출됩니다.</li>
+                    <li><span class="keyword">요소</span>: 단백질과 아미노산이 분해될 때 발생하는 독성이 강한 암모니아를 간이 해독하여 생성합니다.</li>
+                </ul>
+
+                <h3 class="text-xl font-bold text-gray-800 mb-2">배설 기관의 종류와 기능</h3>
+                <ul class="list-disc list-inside mb-4 space-y-2 text-gray-600">
+                    <li><span class="keyword">콩팥</span>: 혈액 속 노폐물을 걸러 오줌을 만드는 주된 기관입니다.</li>
+                    <li><span class="keyword">네프론</span>: 콩팥을 구성하는 기본 단위로, <span class="keyword">사구체, 보먼주머니, 세뇨관</span>으로 이루어져 있습니다. 혈액 여과, 재흡수, 분비 과정을 담당합니다.</li>
+                    <li><span class="keyword">방광</span>: 콩팥에서 내려온 오줌을 일시적으로 저장하는 근육 주머니입니다.</li>
+                    <li><span class="keyword">요도</span>: 방광에 모인 오줌을 몸 밖으로 배출하는 통로입니다.</li>
+                </ul>
+                
+                <h3 class="text-xl font-bold text-gray-800 mb-4">오줌 생성 과정 모식도</h3>
+                <div class="flex flex-col items-center space-y-4 text-sm font-medium">
+                    <div class="flow-box bg-red-100"><span class="keyword">1. 여과</span></div>
+                    <p class="text-center text-gray-600 max-w-md"><span class="keyword">사구체</span>의 높은 압력으로 혈액의 물, 포도당, 아미노산, 요소 등이 <span class="keyword">보먼주머니</span>로 빠져나갑니다. (단백질과 혈구는 크기가 커서 여과되지 않습니다.)</p>
+                    <div class="flow-line">↓</div>
+                    <div class="flow-box bg-yellow-100"><span class="keyword">2. 재흡수</span></div>
+                    <p class="text-center text-gray-600 max-w-md">여과액이 <span class="keyword">세뇨관</span>을 지나면서 몸에 필요한 포도당, 아미노산, 대부분의 물 등이 <span class="keyword">모세혈관</span>으로 다시 흡수됩니다. 이 과정은 능동 수송과 확산에 의해 일어납니다.</p>
+                    <div class="flow-line">↓</div>
+                    <div class="flow-box bg-green-100"><span class="keyword">3. 분비</span></div>
+                    <p class="text-center text-gray-600 max-w-md">재흡수 과정에서 미처 빠져나가지 못한 노폐물이 모세혈관에서 세뇨관으로 능동적으로 이동합니다. (여과와는 반대 방향)</p>
+                    <div class="flow-line">↓</div>
+                    <div class="flow-box bg-blue-100"><span class="keyword">4. 오줌</span></div>
+                    <p class="text-center text-gray-600 max-w-md">여과, 재흡수, 분비 과정을 거쳐 최종적으로 세뇨관에 남은 액체가 오줌이 됩니다.</p>
+                </div>
+                
+
+                <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200 mt-4 text-center">
+                    <h4 class="font-bold text-yellow-800">오줌의 배출 경로</h4>
+                    <p class="mt-2 text-sm font-mono tracking-wider"><span class="keyword">콩팥 → 오줌관 → 방광 → 요도</span></p>
+                </div>
+            </section>
+
+            <section id="cooperation" class="content-section">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">시스템간 협력: 에너지를 만드는 과정 ✨</h2>
+                <p class="mb-4 text-gray-600">우리 몸은 <span class="keyword">세포 호흡</span>을 통해 생명 활동에 필요한 에너지를 얻습니다. 이 과정에는 <span class="keyword">영양소</span>와 <span class="keyword">산소</span>가 필수적이며, 이들을 공급하고 노폐물을 처리하기 위해 모든 기관계가 유기적으로 협력합니다.</p>
+                <div class="bg-indigo-50 p-6 rounded-lg border border-indigo-200">
+                    <h3 class="text-xl font-bold text-center text-indigo-800 mb-4">세포 호흡을 위한 기관계의 유기적 작용</h3>
+                    <div class="flex flex-col items-center space-y-4 text-sm font-medium">
+                        <div class="flow-box bg-green-200">🥗 <span class="keyword">소화계</span>: 음식물 → <span class="text-green-800">영양소(포도당)</span> 분해 및 흡수</div>
+                        <div class="flow-line">↓</div>
+                        <div class="flow-box bg-blue-200">🌬️ <span class="keyword">호흡계</span>: 공기 → <span class="text-blue-800">산소</span> 흡수</div>
+                        <div class="flow-line">↓</div>
+                        <div class="flow-box bg-red-200">❤️ <span class="keyword">순환계</span>: <span class="text-green-800">영양소</span>와 <span class="text-blue-800">산소</span>를 온몸의 세포로 운반</div>
+                        <div class="flow-line">↓</div>
+                        <div class="flow-box bg-purple-200">🔬 세포: <span class="text-green-800">영양소</span>와 <span class="text-blue-800">산소</span>를 이용해 <span class="keyword">에너지 생성</span></div>
+                        <div class="flow-line">↓</div>
+                        <div class="flow-box bg-yellow-200">🗑️ <span class="keyword">순환계</span>: 세포에서 나온 노폐물(<span class="text-red-800">이산화탄소, 요소</span>)을 수거</div>
+                        <div class="flow-line">↓</div>
+                        <div class="flow-box bg-blue-200">🌬️ <span class="keyword">호흡계</span>: <span class="text-red-800">이산화탄소</span> 배출</div>
+                        <div class="flow-line">↓</div>
+                        <div class="flow-box bg-yellow-200">🚽 <span class="keyword">배설계</span>: <span class="text-red-800">요소</span> 배출</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="questions" class="content-section">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">호기심 💡</h2>
+                <p class="mb-6 text-gray-600">기관계의 원리를 알면 일상생활 속 궁금증도 쉽게 풀 수 있어요. 아래 질문들을 보고 스스로 답을 생각해보세요!</p>
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-blue-600">소화계</h3>
+                        <ul class="qa-list mt-2">
+                            <li>라면 먹을 때 국물까지 다 먹으면 왜 몸이 더 붓는 걸까?</li>
+                            <li>씹는 횟수를 늘리면 밥맛이 달라지는 이유는 뭘까?</li>
+                            <li>매운 음식 먹으면 왜 다음 날 화장실에서 힘든 시간을 보내게 될까?</li>
+                            <li>초콜릿을 많이 먹으면 여드름이 생기는 이유가 있을까?</li>
+                            <li>배고플 때 ‘꼬르륵’ 소리가 나는 건 위가 하는 말일까, 장이 하는 말일까?</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-blue-600">순환계</h3>
+                        <ul class="qa-list mt-2">
+                            <li>공포 영화 볼 때 심장이 왜 갑자기 두근두근 빨라질까?</li>
+                            <li>오랫동안 앉아 있다가 갑자기 일어나면 머리가 어지러운 이유는 뭘까?</li>
+                            <li>손발이 차가운 사람은 피가 잘 안 도는 걸까?</li>
+                            <li>운동하면 얼굴이 빨개지는 건 피 때문일까, 열 때문일까?</li>
+                            <li>상처가 나면 왜 시간이 지나면 딱지가 생기는 걸까?</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-blue-600">호흡계</h3>
+                        <ul class="qa-list mt-2">
+                            <li>뜨거운 라면 국물 먹을 때 왜 코로 김이 나올까?</li>
+                            <li>달리기하다가 숨이 차면 왜 옆구리가 아플까?</li>
+                            <li>방귀를 참으면 정말 몸에 안 좋을까?</li>
+                            <li>하품은 왜 전염될까?</li>
+                            <li>비 오는 날 유난히 숨쉬기가 답답한 이유는 뭘까?</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-blue-600">배설계</h3>
+                        <ul class="qa-list mt-2">
+                            <li>오줌이 아침에 더 진한 색이 되는 이유는 뭘까?</li>
+                            <li>수박 많이 먹으면 왜 화장실을 자주 가게 될까?</li>
+                            <li>땀이 나는 게 체온 조절 말고 또 다른 역할이 있을까?</li>
+                            <li>바닷물 마시면 목이 더 마른 이유는 뭘까?</li>
+                            <li>땀 냄새는 왜 사람마다 다를까?</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-blue-600">네 가지 기관계의 유기적 작용</h3>
+                        <ul class="qa-list mt-2">
+                            <li>달리기를 오래 하면 숨이 차고 심장이 빨리 뛰며 땀까지 나는 건 왜 그럴까?</li>
+                            <li>밥 먹고 바로 운동하면 왜 더 숨이 차고 속이 불편할까?</li>
+                            <li>매운 떡볶이 먹고 나서 땀이 나는 건 왜일까?</li>
+                            <li>운동 중에 숨을 헐떡이면 입안이 바짝 마르는 이유는 뭘까?</li>
+                            <li>독감 걸렸을 때 밥맛이 없고 숨도 차고 기운이 없는 건 왜일까?</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navButtons = document.querySelectorAll('.nav-button');
+            const contentSections = document.querySelectorAll('.content-section');
+
+            function switchTab(targetId) {
+                contentSections.forEach(section => section.classList.toggle('active', section.id === targetId));
+                navButtons.forEach(button => button.classList.toggle('active', button.dataset.target === targetId));
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            navButtons.forEach(button => button.addEventListener('click', () => switchTab(button.dataset.target)));
+
+            // Chart for nutrient calories
+            const nutrientCtx = document.getElementById('nutrientChart').getContext('2d');
+            new Chart(nutrientCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['탄수화물', '단백질', '지방'],
+                    datasets: [{
+                        label: '1g당 에너지 (kcal)',
+                        data: [4, 4, 9],
+                        backgroundColor: ['#60a5fa', '#f87171', '#34d399'],
+                        borderColor: ['#3b82f6', '#ef4444', '#10b981'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: true, text: '주영양소의 1g당 에너지량' }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, title: { display: true, text: 'kcal' } }
+                    }
+                }
+            });
+
+            // Chart for blood composition
+            const bloodCompositionCtx = document.getElementById('bloodCompositionChart').getContext('2d');
+            new Chart(bloodCompositionCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['혈장 (Plasma)', '혈구 (Blood Cells)'],
+                    datasets: [{
+                        data: [55, 45],
+                        backgroundColor: ['#60a5fa', '#ef4444'],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top' },
+                        title: { display: true, text: '혈액의 주요 구성 성분' }
+                    }
+                }
+            });
+
+            // Chart for blood vessel properties (existing one)
+            const vesselCtx = document.getElementById('vesselChart').getContext('2d');
+            new Chart(vesselCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['동맥', '정맥', '모세혈관'],
+                    datasets: [{
+                        label: '혈압 (높을수록 진함)', data: [100, 20, 10], backgroundColor: ['#ef4444', '#f87171', '#fecaca']
+                    }, {
+                        label: '벽 두께 (두꺼울수록 진함)', data: [80, 40, 5], backgroundColor: ['#3b82f6', '#60a5fa', '#93c5fd']
+                    }, {
+                        label: '혈관 길이 (길수록 진함)', data: [10, 30, 60], backgroundColor: ['#10b981', '#34d399', '#6ee7b7']
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' }, tooltip: { callbacks: { label: c => `${c.dataset.label.split(' ')[0]}: ${c.parsed.y} (상대값)` } } },
+                    scales: { y: { beginAtZero: true, title: { display: true, text: '상대적 크기' } } }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
